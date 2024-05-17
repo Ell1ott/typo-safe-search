@@ -62,7 +62,10 @@ function compareInner(item: string, query: string): number {
 			q += 1;
 		}
 		// console.log(item, Math.max(...scores));
-		if (scores.length == 0) return score;
+		if (scores.length == 0) {
+			score -= 0.25;
+			continue;
+		}
 		return score + Math.max(...scores);
 	}
 	return score;

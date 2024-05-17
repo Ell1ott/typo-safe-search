@@ -1,4 +1,4 @@
-import compare from "./index";
+import { compare } from "../index";
 const query = "costest";
 
 const items = [
