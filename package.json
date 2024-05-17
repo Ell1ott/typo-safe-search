@@ -1,11 +1,41 @@
 {
-  "name": "simple-saerch",
-  "module": "index.ts",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "type": "module"
+	"name": "typo-safe-search",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"devDependencies": {
+		"@types/bun": "latest",
+		"tsup": "^8.0.2"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"type": "module",
+	"description": "typo safe search is a simple and easy-to-use NPM package designed to perform fuzzy comparisons between two strings. It is particularly useful for sorting and searching operations where the input may contain typos or slight variations.",
+	"version": "1.0.0",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"build": "tsup",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Ell1ott/typo-safe-search.git"
+	},
+	"keywords": [
+		"search",
+		"string-comparison",
+		"string-search"
+	],
+	"author": "elliott.friedrich@outlook.dk",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Ell1ott/typo-safe-search/issues"
+	},
+	"homepage": "https://github.com/Ell1ott/typo-safe-search#readme"
 }
