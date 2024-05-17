@@ -4,7 +4,7 @@
  * @param {string} item - The item to compare.
  * @returns {number} - The calculated score (not normalized).
  */
-function compareInner(query: string, item: string): number {
+function compareInner(item: string, query: string): number {
 	let queryLen = query.length;
 	let itemLen = item.length;
 
@@ -74,8 +74,8 @@ function compareInner(query: string, item: string): number {
  * @param {string} item - The item to compare.
  * @returns {number} - The normalized score.
  */
-function compare(query: string, item: string): number {
-	return compareInner(query.toLowerCase(), item.toLowerCase()) / query.length;
+function compare(item: string, query: string): number {
+	return compareInner(item.toLowerCase(), query.toLowerCase()) / query.length;
 }
 
 export { compare };
