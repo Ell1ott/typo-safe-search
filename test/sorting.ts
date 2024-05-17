@@ -1,5 +1,4 @@
-const compare = require(".");
-
+import compare from "./index";
 const query = "costest";
 
 const items = [
@@ -34,5 +33,7 @@ let searchedItems = items
 searchedItems.forEach((item) => {
 	console.log(item.item, item.score);
 });
+
+console.log(compare("hello", "helo"));
 
 // console.log(compareInner("aura", "kill aura"));
