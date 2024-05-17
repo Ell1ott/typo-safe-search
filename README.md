@@ -1,4 +1,4 @@
-# typo safe search
+# Typo safe search
 
 typo safe search is a simple and easy-to-use NPM package designed to perform fuzzy comparisons between two strings. It is particularly useful for sorting and searching operations where the input may contain typos or slight variations.
 
@@ -51,8 +51,8 @@ let query = "apple";
 items.filter((item) => compare(item, query) > 0);
 ```
 
-Use `> 0` as a threshold to keep all the items that are in some way related to the query.
-Use `> 0.2` to keep all the reasonable realated items.
+- Use `> 0` as a threshold to keep all the items that are in some way related to the query.
+- Use `> 0.2` to keep all the items that are reasonable realated to the query.
 
 ## Contributing
 
