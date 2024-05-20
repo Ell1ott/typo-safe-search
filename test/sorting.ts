@@ -147,7 +147,7 @@ function test(): { item: string; score: number }[] {
 	let searchedItems = items
 		.map((item) => ({
 			item: item,
-			score: compare(query, item),
+			score: compare(item, query),
 		}))
 		.sort((a, b) => b.score - a.score);
 
