@@ -29,13 +29,17 @@ function compareInner(item: string, query: string): number {
 		let i = itemIndex + 1;
 		let q = queryIndex + 1;
 
-		let scores = [] as number[];
+		let highScore = 0;
+
+		const improveScore = (newScore: number) => {
+			if (newScore > highScore) highScore = newScore;
+		};
 
 		// We will check the characters of the item, and run compareInner with the rest of the query.
 		while (i < itemLen) {
 			if (query[queryIndex] === item[i]) {
 				const gap = i - itemIndex;
-				scores.push(
+				improveScore(
 					compareInner(query.slice(queryIndex + 1), item.slice(i + 1)) *
 						((1 / (0.77 + gap / 4.3) + 4) / 5) +
 						0.2 +
@@ -49,7 +53,7 @@ function compareInner(item: string, query: string): number {
 		while (q < queryLen) {
 			if (query[q] === item[itemIndex]) {
 				const gap = q - queryIndex;
-				scores.push(
+				improveScore(
 					compareInner(query.slice(q + 1), item.slice(itemIndex + 1)) *
 						// the further away the characters are, the lower score they will give
 						((1 / (0.77 + gap / 4.3) + 2) / 3) +
@@ -61,12 +65,12 @@ function compareInner(item: string, query: string): number {
 			}
 			q += 1;
 		}
+
+		improveScore(
+			compareInner(query.slice(queryIndex + 1), item.slice(itemIndex + 1)) * 0.9
+		);
 		// console.log(item, Math.max(...scores));
-		if (scores.length == 0) {
-			score -= 0.25;
-			continue;
-		}
-		return score + Math.max(...scores);
+		return score + highScore;
 	}
 	return score;
 }

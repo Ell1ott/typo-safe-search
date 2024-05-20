@@ -1,5 +1,5 @@
 import { compare } from "../index";
-const query = "costest";
+const query = "pnisen";
 
 const items = [
 	"fist",
@@ -21,6 +21,7 @@ const items = [
 	"promote",
 	"philosophy",
 	"dose",
+	"nofall",
 ];
 
 let searchedItems = items
