@@ -11,7 +11,7 @@ function compareInner(item: string, query: string): number {
 	const queryLen = query.length;
 	const itemLen = item.length;
 
-	let score = 0;
+	let score = -0.25;
 
 	while (queryIndex + 1 < queryLen && itemIndex + 1 < itemLen) {
 		queryIndex += 1;
@@ -36,7 +36,8 @@ function compareInner(item: string, query: string): number {
 		};
 
 		improveScore(
-			compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) * 0.9
+			compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) *
+				0.99
 		);
 
 		// We will check the characters of the item, and run compareInner with the rest of the query.
@@ -75,9 +76,9 @@ function compareInner(item: string, query: string): number {
 		}
 
 		// console.log(item, Math.max(...scores));
-		return score + highScore;
+		return Math.max(score, 0) + highScore;
 	}
-	return score;
+	return Math.max(score, 0);
 }
 
 /**
@@ -87,7 +88,10 @@ function compareInner(item: string, query: string): number {
  * @returns {number} - The normalized score.
  */
 function compare(item: string, query: string): number {
-	return compareInner(item.toLowerCase(), query.toLowerCase()) / query.length;
+	return (
+		compareInner(item.toLowerCase(), query.toLowerCase()) / query.length -
+		Math.abs(item.length - query.length) / 100
+	);
 }
 
 const offsetFalloff = (gap: number) =>
