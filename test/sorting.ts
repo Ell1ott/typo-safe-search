@@ -1,5 +1,5 @@
 import { compare } from "../index";
-const query = "pnison";
+const query = "pnisen";
 function test(): { item: string; score: number }[] {
 	const items: string[] = [
 		"fist",
