@@ -40,7 +40,7 @@ function compareInner(item: string, query: string): number {
 			if (query[queryIndex] === item[i]) {
 				const gap = i - itemIndex;
 				const falloff = offsetFalloff(gap);
-				const maxPossibleScore = itemLen - i;
+				const maxPossibleScore = Math.min(itemLen - i, queryLen - queryIndex);
 				if (highScore > maxPossibleScore * falloff) break;
 
 				improveScore(
@@ -55,7 +55,7 @@ function compareInner(item: string, query: string): number {
 			if (query[q] === item[itemIndex]) {
 				const gap = q - queryIndex;
 				const falloff = offsetFalloff(gap);
-				const maxPossibleScore = queryLen - q;
+				const maxPossibleScore = Math.min(queryLen - q, itemLen - itemIndex);
 				if (highScore > maxPossibleScore * falloff) break;
 				improveScore(
 					compareInner(item.slice(itemIndex + 1), query.slice(q + 1)) * falloff
@@ -64,15 +64,10 @@ function compareInner(item: string, query: string): number {
 			q += 1;
 		}
 
-		if (
-			Math.min(queryLen - queryIndex, itemLen - queryIndex) * 0.9 >
-			highScore
-		) {
-			improveScore(
-				compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) *
-					0.9
-			);
-		}
+		improveScore(
+			compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) * 0.9
+		);
+
 		// console.log(item, Math.max(...scores));
 		return score + highScore;
 	}
