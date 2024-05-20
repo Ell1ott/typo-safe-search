@@ -5,11 +5,11 @@
  * @returns {number} - The calculated score (not normalized).
  */
 function compareInner(item: string, query: string): number {
-	let queryLen = query.length;
-	let itemLen = item.length;
-
 	let queryIndex = -1;
 	let itemIndex = -1;
+
+	const queryLen = query.length;
+	const itemLen = item.length;
 
 	let score = 0;
 
@@ -39,11 +39,12 @@ function compareInner(item: string, query: string): number {
 		while (i < itemLen) {
 			if (query[queryIndex] === item[i]) {
 				const gap = i - itemIndex;
+				const falloff = offsetFalloff(gap);
+				const maxPossibleScore = itemLen - i;
+				if (highScore > maxPossibleScore * falloff) break;
+
 				improveScore(
-					compareInner(query.slice(queryIndex + 1), item.slice(i + 1)) *
-						((1 / (0.77 + gap / 4.3) + 4) / 5) +
-						0.2 +
-						0.2 / gap
+					compareInner(item.slice(i + 1), query.slice(queryIndex + 1)) * falloff
 				);
 			}
 			i += 1;
@@ -53,22 +54,25 @@ function compareInner(item: string, query: string): number {
 		while (q < queryLen) {
 			if (query[q] === item[itemIndex]) {
 				const gap = q - queryIndex;
+				const falloff = offsetFalloff(gap);
+				const maxPossibleScore = queryLen - q;
+				if (highScore > maxPossibleScore * falloff) break;
 				improveScore(
-					compareInner(query.slice(q + 1), item.slice(itemIndex + 1)) *
-						// the further away the characters are, the lower score they will give
-						((1 / (0.77 + gap / 4.3) + 2) / 3) +
-						// We want to prioritice connected characters,
-						// therefore we only add a small score for the first character.
-						0.2 +
-						0.2 / gap
+					compareInner(item.slice(itemIndex + 1), query.slice(q + 1)) * falloff
 				);
 			}
 			q += 1;
 		}
 
-		improveScore(
-			compareInner(query.slice(queryIndex + 1), item.slice(itemIndex + 1)) * 0.9
-		);
+		if (
+			Math.min(queryLen - queryIndex, itemLen - queryIndex) * 0.9 >
+			highScore
+		) {
+			improveScore(
+				compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) *
+					0.9
+			);
+		}
 		// console.log(item, Math.max(...scores));
 		return score + highScore;
 	}
@@ -84,5 +88,13 @@ function compareInner(item: string, query: string): number {
 function compare(item: string, query: string): number {
 	return compareInner(item.toLowerCase(), query.toLowerCase()) / query.length;
 }
+
+const offsetFalloff = (gap: number) =>
+	// the further away the characters are, the lower score they will give
+	(1 / (0.77 + gap / 4.3) + 2) / 3 +
+	// We want to prioritice connected characters,
+	// therefore we only add a small score for the first character.
+	0.2 +
+	0.2 / gap;
 
 export { compare };
