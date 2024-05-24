@@ -12,18 +12,17 @@ function compareInner(
 		item.length - itemIndex,
 		query.length - queryIndex
 	);
+
+	// Here we do something simular to alpha-beta pruning in chess bots
+	// We can stop the search, if we already know that we got a better score than the maximum possible score in this branch
 	if (scoreToBeat > maxPossibleScore) return 0;
-	// 	return Math.min(item.length - itemIndex, query.length - itemIndex);
 
 	if (item[itemIndex] == query[queryIndex]) {
-		// console.log(item[itemIndex], query[queryIndex], "+");
 		const score =
 			(itemIndex == 0 ? 1 : 0.9) +
 			compareInner(item, query, itemIndex + 1, queryIndex + 1);
 		return score;
 	}
-	// console.log(item[itemIndex], query[queryIndex], "-");
-
 	let i = itemIndex + 1;
 
 	let highscore = 0;
