@@ -1,5 +1,5 @@
-import { compare } from "../index";
-const query = "pnisen";
+import { compare } from "../testindex";
+const query = "ponison";
 function test(): { item: string; score: number }[] {
 	const items: string[] = [
 		"fist",
@@ -143,6 +143,14 @@ function test(): { item: string; score: number }[] {
 		"reverse",
 		"cruelty",
 	];
+	items.forEach((q) => {
+		let searchedItems = items
+			.map((item) => ({
+				item: item,
+				score: compare(item, q),
+			}))
+			.sort((a, b) => b.score - a.score);
+	});
 
 	let searchedItems = items
 		.map((item) => ({
@@ -154,12 +162,14 @@ function test(): { item: string; score: number }[] {
 	return searchedItems;
 }
 
-test().forEach((item) => {
-	console.log(item.item, item.score);
-});
+test()
+	.slice(0, 20)
+	.forEach((item) => {
+		console.log(item.item, item.score);
+	});
 
 performance.mark("start");
-for (let i = 0; i < 40000; i++) {
+for (let i = 0; i < 250; i++) {
 	test();
 }
 // searchedItems.forEach((item) => {

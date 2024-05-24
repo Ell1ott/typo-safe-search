@@ -35,15 +35,12 @@ function compareInner(item: string, query: string): number {
 			if (newScore > highScore) highScore = newScore;
 		};
 
-		improveScore(
-			compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) *
-				0.99
-		);
-
 		// We will check the characters of the item, and run compareInner with the rest of the query.
+		let gap = 0;
 		while (i < itemLen) {
+			gap++;
+			if (query[queryIndex] == " ") gap = 0;
 			if (query[queryIndex] === item[i]) {
-				const gap = i - itemIndex;
 				const falloff = offsetFalloff(gap);
 				const maxPossibleScore = Math.min(
 					itemLen - i - 1,
@@ -55,7 +52,7 @@ function compareInner(item: string, query: string): number {
 					compareInner(item.slice(i + 1), query.slice(queryIndex + 1)) * falloff
 				);
 			}
-			i += 1;
+			i++;
 		}
 
 		// Do the same for the query. usefull if we accidently placed a character in the wrong place. (e.g. "javsascript")
@@ -74,6 +71,14 @@ function compareInner(item: string, query: string): number {
 			}
 			q += 1;
 		}
+		if (
+			highScore <
+			Math.min(queryLen - queryIndex - 1, itemLen - itemIndex - 1) * 0.99
+		)
+			improveScore(
+				compareInner(item.slice(itemIndex + 1), query.slice(queryIndex + 1)) *
+					0.99
+			);
 
 		// console.log(item, Math.max(...scores));
 		return Math.max(score, 0) + highScore;
