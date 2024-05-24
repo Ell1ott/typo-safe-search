@@ -1,4 +1,4 @@
-import { compare } from "../testindex";
+import { compare } from "../index";
 const query = "ponison";
 function test(): { item: string; score: number }[] {
 	const items: string[] = [
