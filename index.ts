@@ -36,9 +36,9 @@ function compareInner(
 					query,
 					i,
 					queryIndex,
-					scoreToBeat + highscore / 0.95 + 0.25
+					scoreToBeat + highscore / 0.98 + 0.25
 				) *
-					0.95 -
+					0.98 -
 				0.25;
 
 			if (score > highscore) highscore = score;
@@ -52,8 +52,8 @@ function compareInner(
 			query,
 			itemIndex,
 			queryIndex + 1,
-			scoreToBeat + highscore / 0.95 + 0.25
-		) * 0.95;
+			scoreToBeat + highscore / 0.98 + 0.25
+		) * 0.98;
 	return Math.max(score - 0.25, highscore);
 }
 
