@@ -1,3 +1,6 @@
+const JUMP_CHAR_FALL: number = 0.98;
+const FIRST_CHAR_PENALTY: number = 0.25;
+
 function compareInner(
 	item: string,
 	query: string,
@@ -16,11 +19,11 @@ function compareInner(
 	// Here we do something simular to alpha-beta pruning in chess bots
 	// We can stop the search, if we already know that we got a better score than the maximum possible score in this branch
 	// This uses only 73% of the time compared to no pruning
-	if (scoreToBeat > maxPossibleScore) return 0;
+	if (scoreToBeat > maxPossibleScore * 0.9) return 0;
 
 	if (item[itemIndex] == query[queryIndex]) {
 		const score =
-			(itemIndex == 0 ? 1 : 0.9) +
+			(itemIndex == 0 && queryIndex == 0 ? 1 : 0.9) +
 			compareInner(item, query, itemIndex + 1, queryIndex + 1);
 		return score;
 	}
@@ -36,10 +39,10 @@ function compareInner(
 					query,
 					i,
 					queryIndex,
-					scoreToBeat + highscore / 0.98 + 0.25
+					scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
 				) *
-					0.98 -
-				0.25;
+					JUMP_CHAR_FALL -
+				FIRST_CHAR_PENALTY;
 
 			if (score > highscore) highscore = score;
 		}
@@ -52,9 +55,9 @@ function compareInner(
 			query,
 			itemIndex,
 			queryIndex + 1,
-			scoreToBeat + highscore / 0.98 + 0.25
-		) * 0.98;
-	return Math.max(score - 0.25, highscore);
+			scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
+		) * JUMP_CHAR_FALL;
+	return Math.max(score - FIRST_CHAR_PENALTY, highscore);
 }
 
 export function compare(item: string, query: string): number {
