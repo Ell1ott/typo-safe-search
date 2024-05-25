@@ -23,7 +23,7 @@ function compareInner(
 
 	if (item[itemIndex] == query[queryIndex]) {
 		const score =
-			(itemIndex == 0 && queryIndex == 0 ? 1 : 0.9) +
+			(itemIndex == 0 && queryIndex == 0 ? 0.9 : 1) +
 			compareInner(item, query, itemIndex + 1, queryIndex + 1);
 		return score;
 	}
