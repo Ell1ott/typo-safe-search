@@ -169,7 +169,7 @@ test()
 	});
 
 performance.mark("start");
-for (let i = 0; i < 250; i++) {
+for (let i = 0; i < 500; i++) {
 	test();
 }
 // searchedItems.forEach((item) => {
