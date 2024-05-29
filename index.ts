@@ -22,10 +22,9 @@ function compareInner(
 	if (scoreToBeat > maxPossibleScore) return 0;
 
 	if (item.charCodeAt(itemIndex) == query.charCodeAt(queryIndex)) {
-		// console.log("dfg");
 		const score =
 			(itemIndex == 0 && queryIndex == 0 ? 0.9 : 1) +
-			compareInner(item, query, itemIndex + 1, queryIndex + 1);
+			compareInner(item, query, itemIndex + 1, queryIndex + 1, scoreToBeat - 1);
 		return score;
 	}
 	let i = itemIndex + 1;
@@ -33,7 +32,6 @@ function compareInner(
 	let highscore = 0;
 
 	while (i < item.length) {
-		// console.log("dfg");
 		if (item.charCodeAt(i) === query.charCodeAt(queryIndex)) {
 			const score =
 				(compareInner(
@@ -51,7 +49,6 @@ function compareInner(
 		}
 		i++;
 	}
-	// console.log("dfg");
 
 	const score =
 		compareInner(
