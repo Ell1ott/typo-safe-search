@@ -21,7 +21,8 @@ function compareInner(
 	// This uses only 73% of the time compared to no pruning
 	if (scoreToBeat > maxPossibleScore) return 0;
 
-	if (item[itemIndex] == query[queryIndex]) {
+	if (item.charCodeAt(itemIndex) == query.charCodeAt(queryIndex)) {
+		// console.log("dfg");
 		const score =
 			(itemIndex == 0 && queryIndex == 0 ? 0.9 : 1) +
 			compareInner(item, query, itemIndex + 1, queryIndex + 1);
@@ -32,7 +33,8 @@ function compareInner(
 	let highscore = 0;
 
 	while (i < item.length) {
-		if (item[i] === query[queryIndex]) {
+		// console.log("dfg");
+		if (item.charCodeAt(i) === query.charCodeAt(queryIndex)) {
 			const score =
 				(compareInner(
 					item,
@@ -49,6 +51,7 @@ function compareInner(
 		}
 		i++;
 	}
+	// console.log("dfg");
 
 	const score =
 		compareInner(
@@ -58,6 +61,7 @@ function compareInner(
 			queryIndex + 1,
 			scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
 		) * JUMP_CHAR_FALL;
+
 	return Math.max(score - FIRST_CHAR_PENALTY, highscore);
 }
 
