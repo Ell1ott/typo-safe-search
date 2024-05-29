@@ -1,6 +1,6 @@
 const JUMP_CHAR_FALL: number = 0.98;
 const FIRST_CHAR_PENALTY: number = 0.25;
-let i = 0;
+
 function compareInner(
 	item: string,
 	query: string,
@@ -21,7 +21,8 @@ function compareInner(
 	// This uses only 73% of the time compared to no pruning
 	if (scoreToBeat > maxPossibleScore) return 0;
 
-	if (item.charCodeAt(itemIndex) == query.charCodeAt(queryIndex)) {
+	const b = query.charCodeAt(queryIndex);
+	if (item.charCodeAt(itemIndex) == b) {
 		const score =
 			(itemIndex == 0 && queryIndex == 0 ? 0.9 : 1) +
 			compareInner(item, query, itemIndex + 1, queryIndex + 1, scoreToBeat - 1);
@@ -32,7 +33,7 @@ function compareInner(
 	let highscore = 0;
 
 	while (i < item.length) {
-		if (item.charCodeAt(i) === query.charCodeAt(queryIndex)) {
+		if (item.charCodeAt(i) == b) {
 			const score =
 				(compareInner(
 					item,
@@ -57,9 +58,11 @@ function compareInner(
 			itemIndex,
 			queryIndex + 1,
 			scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
-		) * JUMP_CHAR_FALL;
+		) *
+			JUMP_CHAR_FALL -
+		FIRST_CHAR_PENALTY;
 
-	return Math.max(score - FIRST_CHAR_PENALTY, highscore);
+	return Math.max(score, highscore);
 }
 
 export function compare(item: string, query: string): number {
