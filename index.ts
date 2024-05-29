@@ -1,6 +1,6 @@
 const JUMP_CHAR_FALL: number = 0.98;
 const FIRST_CHAR_PENALTY: number = 0.25;
-
+let i = 0;
 function compareInner(
 	item: string,
 	query: string,
@@ -34,13 +34,14 @@ function compareInner(
 	while (i < item.length) {
 		if (item[i] === query[queryIndex]) {
 			const score =
-				compareInner(
+				(compareInner(
 					item,
 					query,
-					i,
-					queryIndex,
+					i + 1,
+					queryIndex + 1,
 					scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
-				) *
+				) +
+					1) *
 					JUMP_CHAR_FALL -
 				FIRST_CHAR_PENALTY;
 
