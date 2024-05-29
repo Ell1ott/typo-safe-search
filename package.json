@@ -14,7 +14,7 @@
 	},
 	"type": "module",
 	"description": "typo safe search is a simple and easy-to-use NPM package designed to perform fuzzy comparisons between two strings. It is particularly useful for sorting and searching operations where the input may contain typos or slight variations.",
-	"version": "2.0.4",
+	"version": "2.0.5",
 	"directories": {
 		"test": "test"
 	},
