@@ -40,7 +40,7 @@ function compareInner(
 					query,
 					i + 1,
 					queryIndex + 1,
-					scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
+					scoreToBeat + (highscore - 1) / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
 				) +
 					1) *
 					JUMP_CHAR_FALL -
@@ -57,7 +57,7 @@ function compareInner(
 			query,
 			itemIndex,
 			queryIndex + 1,
-			scoreToBeat + highscore / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
+			scoreToBeat + (highscore - 1) / JUMP_CHAR_FALL + FIRST_CHAR_PENALTY
 		) *
 			JUMP_CHAR_FALL -
 		FIRST_CHAR_PENALTY;
