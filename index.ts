@@ -1,5 +1,5 @@
 const JUMP_CHAR_FALL: number = 0.98;
-const FIRST_CHAR_PENALTY: number = 0.25;
+const FIRST_CHAR_PENALTY: number = 0.28;
 
 function compareInner(
 	item: string,
@@ -68,6 +68,6 @@ function compareInner(
 export function compare(item: string, query: string): number {
 	return (
 		compareInner(item.toLowerCase(), query.toLowerCase()) / query.length -
-		Math.abs(item.length - query.length) / 100
+		Math.abs(item.length - query.length) / 200
 	);
 }
